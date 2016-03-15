@@ -66,7 +66,6 @@ namespace Ballz
             Components.Add(Network);
             Components.Add(menuRendering);
             Components.Add(new PerformanceRenderer(this));
-            Components.Add(new GuiRenderer(this));
 
             MainMenu = DefaultMenu();
             Logic = new LogicControl(this);
