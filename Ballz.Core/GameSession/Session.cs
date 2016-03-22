@@ -82,10 +82,10 @@ namespace Ballz.GameSession
 
         public void Start()
         {
-            Input.Input += Physics.HandleMessage;
-            Input.Input += GameRenderer.HandleMessage;
-            Input.Input += SessionLogic.HandleMessage;
-            Input.Input += DebugRenderer.HandleMessage;
+            Input.GameInput += Physics.HandleMessage;
+            Input.GameInput += GameRenderer.HandleMessage;
+            Input.GameInput += SessionLogic.HandleMessage;
+            Input.GameInput += DebugRenderer.HandleMessage;
             State = SessionState.Running;
         }
 
@@ -113,8 +113,8 @@ namespace Ballz.GameSession
                     Game.Components.Remove(GameRenderer);
                     Game.Components.Remove(SessionLogic);
 
-                    Input.Input -= Physics.HandleMessage;
-                    Input.Input -= GameRenderer.HandleMessage;
+                    Input.GameInput -= Physics.HandleMessage;
+                    Input.GameInput -= GameRenderer.HandleMessage;
                 }
                 
                 disposedValue = true;

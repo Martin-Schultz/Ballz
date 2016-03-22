@@ -6,9 +6,26 @@
       background: transparent;
       font-family: sans-serif;
     }
+
+    #hover-test {
+      background: #f00;
+    }
+
+    #hover-test:hover {
+      background: #0f0;
+    }
+
+    #input-test:focus {
+      border: 1px solid #f00;
+    }
   </style>
 </head>
 <body>
   <h1>Hallo</h1>
+  <div id="hover-test"></div>
+  <input type="text" id="input-test">
+  <script>
+    document.getElementById("input-test").focus();
+  </script>
 </body>
 </html>

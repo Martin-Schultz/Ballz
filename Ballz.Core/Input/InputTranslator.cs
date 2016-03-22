@@ -54,7 +54,7 @@ namespace Ballz.Input
             PROCESSED
         }
 
-        public event EventHandler<InputMessage> Input;
+        public event EventHandler<InputMessage> GameInput;
 
         public InputTranslator(Ballz game) : base(game)
         {
@@ -78,7 +78,7 @@ namespace Ballz.Input
 
         private void OnInput(InputMessage.MessageType inputMessage, bool? pressed = null, char? key = null, Player player = null)
         {
-            Input?.Invoke(this, new InputMessage(inputMessage, pressed, key, player)); //todo: use object pooling and specify message better
+            GameInput?.Invoke(this, new InputMessage(inputMessage, pressed, key, player)); //todo: use object pooling and specify message better
         }
 
         private void ProcessGamePadInput(int p)

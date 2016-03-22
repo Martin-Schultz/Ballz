@@ -18,6 +18,14 @@ namespace Ballz.Renderer
         SpriteBatch spriteBatch;
         Texture2D guiTexture;
 
+        public CefBrowser Browser;
+        public CefBrowserHost BroserHost;
+        public CefFrame Frame;
+
+        bool InputConnected = false;
+
+        Ballz Game;
+
         public class GuiData
         {
             public IntPtr Buffer = IntPtr.Zero;
@@ -32,6 +40,7 @@ namespace Ballz.Renderer
             Enabled = true;
             Visible = true;
             DrawOrder = 10;
+            Game = ballz;
         }
 
         int Width = 1280;
@@ -118,6 +127,27 @@ namespace Ballz.Renderer
                 spriteBatch.Draw(guiTexture, new Vector2(0, 0), Microsoft.Xna.Framework.Color.White);
                 spriteBatch.End();
             }
+
+        }
+        
+        public void OnBrowserFound()
+        {
+            if (!InputConnected && Game.GlobalInput != null)
+            {
+                InputConnected = true;
+                Game.GlobalInput.GameInput += (s, e) =>
+                {
+                    var cefEvent = new CefKeyEvent();
+
+                    if (e.Pressed != null)
+                        cefEvent.EventType = e.Pressed.Value ? CefKeyEventType.KeyDown : CefKeyEventType.KeyUp;
+
+                    if (e.Key != null)
+                        cefEvent.Character = e.Key.Value;
+
+                    //BroserHost.SendKeyEvent(cefEvent);
+                };
+            }
         }
 
         internal class DemoCefApp : CefApp
@@ -133,7 +163,7 @@ namespace Ballz.Renderer
             public DemoCefClient(GuiRenderer renderer)
             {
                 RenderHandler = new DemoCefRenderHandler(renderer);
-                LoadHandler = new DemoCefLoadHandler();
+                LoadHandler = new DemoCefLoadHandler(renderer);
                 Renderer = renderer;
             }
 
@@ -150,8 +180,22 @@ namespace Ballz.Renderer
 
         internal class DemoCefLoadHandler : CefLoadHandler
         {
+            GuiRenderer Renderer;
+            public DemoCefLoadHandler(GuiRenderer renderer)
+            {
+                Renderer = renderer;
+            }
+
             protected override void OnLoadStart(CefBrowser browser, CefFrame frame)
             {
+                if (Renderer.Browser == null)
+                {
+                    Renderer.Browser = browser;
+                    Renderer.BroserHost = browser.GetHost();
+                    if (frame.IsMain)
+                        Renderer.Frame = frame;
+                    Renderer.OnBrowserFound();
+                }
             }
 
             protected override void OnLoadEnd(CefBrowser browser, CefFrame frame, int httpStatusCode)
@@ -213,6 +257,7 @@ namespace Ballz.Renderer
 
             protected override void OnCursorChange(CefBrowser browser, IntPtr cursorHandle, CefCursorType type, CefCursorInfo customCursorInfo)
             {
+                Console.WriteLine("Cursor");
             }
 
             protected override void OnScrollOffsetChanged(CefBrowser browser, double x, double y)

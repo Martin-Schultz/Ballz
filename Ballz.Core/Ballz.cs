@@ -42,6 +42,8 @@ namespace Ballz
 
         public Camera Camera { get; set; }
 
+        public InputTranslator GlobalInput { get; set; }
+
         private Ballz()
         {
             Teamnames = new List<string>();
@@ -58,10 +60,10 @@ namespace Ballz
             // create the Game Components
             var menuRendering = new MenuRenderer(this, DefaultMenu());
             //var physics = new PhysicsControl(this);
-            var input = new InputTranslator(this);
+            var GlobalInput = new InputTranslator(this);
             Network = new Network.Network(this);
 
-            Components.Add(input);
+            Components.Add(GlobalInput);
             //Components.Add(physics);
             Components.Add(Network);
             Components.Add(menuRendering);
@@ -72,14 +74,14 @@ namespace Ballz
             Logic = new LogicControl(this);
 
             Services.AddService(Logic);
-            Services.AddService(input);
+            Services.AddService(GlobalInput);
 
             Services.AddService(new SoundControl(this));
 
             //add eventhandlers to events
-            input.Input += Logic.HandleInputMessage;
+            GlobalInput.GameInput += Logic.HandleInputMessage;
             //input.Input += physics.HandleMessage;
-            input.Input += Network.HandleMessage;
+            GlobalInput.GameInput += Network.HandleMessage;
 
             //Logic.Message += physics.HandleMessage;
             Logic.Message += Network.HandleMessage;
