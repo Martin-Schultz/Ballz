@@ -32,14 +32,14 @@ namespace Ballz.Input
             {
                 if (value == InputMode.RAW && !subscribed)
                 {
-                    Game.Window.TextInput += RawHandler;
+                    //Game.Window.TextInput += RawHandler;
                     subscribed = true;
                 }
                 else
                 {
                     if (Mode != value && subscribed)
                     {
-                        Game.Window.TextInput -= RawHandler;
+                        //Game.Window.TextInput -= RawHandler;
                         subscribed = false;
                     }
                 }
@@ -71,9 +71,9 @@ namespace Ballz.Input
             //previousGamePadState = GamePad.GetState(
         }
 
-        void RawHandler(object sender, TextInputEventArgs eventArgs)
+        void RawHandler(object sender, object eventArgs)//TextInputEventArgs eventArgs)
         {
-            OnInput(InputMessage.MessageType.RawInput, null, eventArgs.Character);
+            //OnInput(InputMessage.MessageType.RawInput, null, eventArgs.Character);
         }
 
         private void OnInput(InputMessage.MessageType inputMessage, bool? pressed = null, char? key = null, Player player = null)

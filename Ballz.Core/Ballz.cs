@@ -68,15 +68,14 @@ namespace Ballz
             Components.Add(Network);
             Components.Add(menuRendering);
             Components.Add(new PerformanceRenderer(this));
-            Components.Add(new GuiRenderer(this));
 
             MainMenu = DefaultMenu();
             Logic = new LogicControl(this);
 
-            Services.AddService(Logic);
-            Services.AddService(GlobalInput);
+            Services.AddService(Logic.GetType(), Logic);
+            Services.AddService(GlobalInput.GetType(), GlobalInput);
 
-            Services.AddService(new SoundControl(this));
+            Services.AddService(typeof(SoundControl), new SoundControl(this));
 
             //add eventhandlers to events
             GlobalInput.GameInput += Logic.HandleInputMessage;

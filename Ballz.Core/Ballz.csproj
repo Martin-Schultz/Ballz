@@ -1,7 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Condition="'$(OS)' != 'Windows_NT'" Project="../Linux/Ballz.Linux.csproj" />
-  <Import Condition="'$(OS)' == 'Windows_NT'" Project="../Windows/Ballz.Windows.csproj" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">Windows</Platform>
@@ -17,6 +15,13 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -55,7 +60,6 @@
     <Compile Include="Network\Connection.cs" />
     <Compile Include="Network\Network.cs" />
     <Compile Include="Network\Server.cs" />
-    <Compile Include="Renderer\GuiRenderer.cs" />
     <Compile Include="Renderer\MenuRenderer.cs" />
     <Compile Include="Ballz.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -153,24 +157,29 @@
     <Content Include="Content\Textures\Teams\Murica.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="SDL2.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Reference Include="FarseerPhysics MonoGame">
-      <HintPath>..\packages\FarseerPhysics.MonoGame.Unofficial.3.5.0\lib\FarseerPhysics MonoGame.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\extern\farseer\SourceFiles\Farseer Physics FNA.csproj">
+      <Project>{0aad36e3-51a5-4a07-ab60-ac2a66bd38b7}</Project>
+      <Name>Farseer Physics FNA</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\extern\fna\FNA.csproj">
+      <Project>{35253ce1-c864-4cd3-8249-4d1319748e8f}</Project>
+      <Name>FNA</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="MathFloat, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\MathFloat.1.0.0.0\lib\net20\MathFloat.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="System" />
     <Reference Include="System.Drawing" />
-    <Reference Include="Xilium.CefGlue">
-      <HintPath>.\Xilium.CefGlue.dll</HintPath>
-    </Reference>
-    <Reference Include="Xilium.CefGlue.Demo">
-      <HintPath>.\Xilium.CefGlue.Demo.dll</HintPath>
-    </Reference>
+    <Reference Include="System.XML" />
   </ItemGroup>
 </Project>

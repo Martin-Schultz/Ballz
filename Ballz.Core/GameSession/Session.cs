@@ -69,13 +69,13 @@ namespace Ballz.GameSession
             SessionLogic.Enabled = false;
             _game.Components.Add(SessionLogic);
 
-            Logic = _game.Services.GetService<LogicControl>();
+            Logic = _game.Services.GetService(typeof(LogicControl)) as LogicControl;
             Logic.Message += Physics.HandleMessage;
             Logic.Message += GameRenderer.HandleMessage;
             Logic.Message += SessionLogic.HandleMessage;
             Logic.Message += DebugRenderer.HandleMessage;
 
-            Input = _game.Services.GetService<Input.InputTranslator>();
+            Input = _game.Services.GetService(typeof(Input.InputTranslator)) as Input.InputTranslator;
             
             Game = _game;
         }

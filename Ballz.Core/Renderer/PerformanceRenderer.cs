@@ -54,7 +54,7 @@ namespace Ballz
 
         public override void Initialize()
         {
-            Game.Services.GetService<Logic.LogicControl>().Message += HandleMessage;
+            (Game.Services.GetService(typeof(Logic.LogicControl)) as Logic.LogicControl).Message += HandleMessage;
             base.Initialize();
         }
 

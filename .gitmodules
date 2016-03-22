@@ -1,0 +1,6 @@
+[submodule "extern/fna"]
+	path = extern/fna
+	url = https://github.com/FNA-XNA/FNA.git
+[submodule "extern/farseer"]
+	path = extern/farseer
+	url = https://github.com/LukasBoersma/FarseerPhysics.git

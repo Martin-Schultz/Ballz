@@ -166,7 +166,7 @@ namespace Ballz.GameSession.Physics
                 else
                 {
                     segment.BodyType = BodyType.Static;
-                 }
+                }
              }
             //var ballAnchor = rope.AttachedEntity.Position + new Vector2(0, rope.AttachedEntity.Radius + 1f);
             var ballJoint = JointFactory.CreateRevoluteJoint(PhysicsWorld, rope.PhysicsSegments.Last(), rope.AttachedEntity.PhysicsBody, Vector2.Zero, Vector2.Zero);

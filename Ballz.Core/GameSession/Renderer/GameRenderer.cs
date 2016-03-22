@@ -118,7 +118,7 @@ namespace Ballz.GameSession.Renderer
                     ColorDestinationBlend = Blend.InverseSourceAlpha,
                 };
 
-                spriteBatch.Begin(blendState: blending);
+                spriteBatch.Begin();// blendState: blending);
                 foreach (var entity in worldState.Entities)
                 {
                     if (entity.Disposed)
@@ -175,7 +175,7 @@ namespace Ballz.GameSession.Renderer
                     var weaponTexture = Game.Content.Load<Texture2D>("Textures/" + ball.HoldingWeapon);
 
                     // Draw weapon
-                    spriteBatch.Draw(weaponTexture, position: weaponPosScreen, color: Color.White, rotation: weaponRotation, origin: new Vector2(32, 32), effects: effects);
+                    //spriteBatch.Draw(weaponTexture, position: weaponPosScreen, color: Color.White, rotation: weaponRotation, origin: new Vector2(32, 32), effects: effects);
                 }
 
                 if (ball.IsAiming)
@@ -190,11 +190,11 @@ namespace Ballz.GameSession.Renderer
                         var chargeColor = GetChargeColor(ball.ShootCharge);
 
                         // Draw charge indicator
-                        spriteBatch.Draw(WhiteTexture, position: aimIndicatorScreen, scale: new Vector2(100, 20), color: new Color(Color.Black, (int)(64*ball.ShootCharge)), rotation: aimRotation, origin: new Vector2(0, 0.5f));
-                        spriteBatch.Draw(WhiteTexture, position: aimIndicatorScreen, scale: aimIndicatorSize, color: new Color(chargeColor), rotation: aimRotation, origin: new Vector2(0, 0.5f));
+                        //spriteBatch.Draw(WhiteTexture, position: aimIndicatorScreen, scale: new Vector2(100, 20), color: new Color(Color.Black, (int)(64*ball.ShootCharge)), rotation: aimRotation, origin: new Vector2(0, 0.5f));
+                        //spriteBatch.Draw(WhiteTexture, position: aimIndicatorScreen, scale: aimIndicatorSize, color: new Color(chargeColor), rotation: aimRotation, origin: new Vector2(0, 0.5f));
                     }
                     // Draw crosshair
-                    spriteBatch.Draw(CrosshairTexture, position: aimTargetScreen, color: Color.White, rotation: aimRotation, origin: new Vector2(16, 16));
+                    //spriteBatch.Draw(CrosshairTexture, position: aimTargetScreen, color: Color.White, rotation: aimRotation, origin: new Vector2(16, 16));
                 }
             }
             else // Player is dead

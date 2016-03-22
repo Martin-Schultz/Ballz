@@ -17,7 +17,7 @@ namespace Ballz.Network
     {
         public readonly int Id;
         private readonly TcpClient tcpClient;
-        NetworkStream connectionStream;
+        System.Net.Sockets.NetworkStream connectionStream;
 
         byte[] readBuffer;
         int readDataLength = -1;

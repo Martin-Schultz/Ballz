@@ -27,7 +27,7 @@ namespace Ballz.GameSession.Logic
 
         public void FireProjectile()
         {
-            Game.Services.GetService<SoundControl>().PlaySound(SoundControl.ShotSound);
+            (Game.Services.GetService(typeof(SoundControl)) as SoundControl).PlaySound(SoundControl.ShotSound);
             Game.World.Entities.Add(new Shot
             {
                 ExplosionRadius = 1.0f,
