@@ -11,8 +11,11 @@ using System.Threading.Tasks;
 
 namespace Ballz.SessionFactory
 {
+    using System.Diagnostics;
+
     public class Worms : SessionFactory
     {
+
         public Worms(string mapName = "TestWorld2", bool usePlayerTurns = false)
         {
             MapName = mapName;
@@ -77,17 +80,31 @@ namespace Ballz.SessionFactory
             return spawns.Select((i)=>SpawnPoints[i]).ToList();
         }
 
-        public override Session StartSession(Ballz game, GameSession.Logic.GameSettings settings)
+        protected override void ImplInitializeSession(Ballz game, GameSession.Logic.GameSettings settings)
         {
-            var session = new Session(game, settings);
+            if (settings.MapTexture == null)
+            { // Multiplayer clients will already have a map
+                var mapTexture = game.Content.Load<Texture2D>("Worlds/" + MapName);
+                settings.MapName = MapName;
+                settings.MapTexture = mapTexture;
+            }
+            else
+            {
+                Debug.Assert(settings.MapName != String.Empty);
+                MapName = settings.MapName;
+            }
+        }
 
-            session.UsePlayerTurns = UsePlayerTurns;
+        protected override Session ImplStartSession(Ballz game, GameSettings settings)
+        {
+            var session = new Session(game, settings)
+                              {
+                                  UsePlayerTurns = this.UsePlayerTurns,
+                                  Terrain = new Terrain(settings.MapTexture)
+                              };
 
-            var mapTexture = game.Content.Load<Texture2D>("Worlds/" + MapName);
-            session.Terrain = new Terrain(mapTexture);
-
-            FindSpawnPoints(mapTexture, session.Terrain.Scale);
-            var spawnPoints = SelectSpawnpoints(settings.Teams.Count);
+            FindSpawnPoints(settings.MapTexture, session.Terrain.Scale);
+            var spawnPoints = SelectSpawnpoints(settings.Teams.Select(t=>t.NumberOfBallz).Sum());
 
             // Create players and Ballz
             var currBallCreating = 0;
@@ -98,21 +115,31 @@ namespace Ballz.SessionFactory
                 for (var i = 0; i < team.NumberOfBallz; ++i)
                 {
                     var playerBall = new Ball
-                        {
-                            Position = spawnPoints[currBallCreating],
-                            Velocity = new Vector2(0, 0),
-                            IsAiming = true,
-                            Player = team.player,
-                            HoldingWeapon = "Bazooka",
-                            IsStatic = false
-                        };
+                    {
+                        Position = spawnPoints[currBallCreating],
+                        Velocity = new Vector2(0, 0),
+                        IsAiming = true,
+                        Player = team.player,
+                        HoldingWeapon = "Bazooka",
+                        IsStatic = false
+                    };
+                    team.player.OwnedBalls.Add(playerBall);
                     ++currBallCreating;
                     session.Entities.Add(playerBall);
+
+                    BallControl controller;
+
                     if (team.ControlledByAI)
-                        session.SessionLogic.BallControllers[team.player] = new AIControl(game, session, playerBall);
+                        controller = new AIControl(game, session, playerBall);
                     else
-                        session.SessionLogic.BallControllers[team.player] = new UserControl(game, session, playerBall);
+                        controller = new UserControl(game, session, playerBall);
+
+                    session.SessionLogic.BallControllers[playerBall] = controller;
+
                 }
+
+                team.player.ActiveBall = team.player.OwnedBalls.FirstOrDefault();
+                session.SessionLogic.ActiveControllers[team.player] = session.SessionLogic.BallControllers[team.player.ActiveBall];
             }
 
             var snpsht = new World(session.Entities, session.Terrain);

@@ -4,3 +4,6 @@
 [submodule "extern/farseer"]
 	path = extern/farseer
 	url = https://github.com/LukasBoersma/FarseerPhysics.git
+[submodule "ObjectSynch"]
+	path = ObjectSynch
+	url = https://github.com/SpagAachen/ObjectSync.git
