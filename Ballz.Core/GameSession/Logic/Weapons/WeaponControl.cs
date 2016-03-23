@@ -44,7 +44,7 @@ namespace Ballz.GameSession.Logic
         /// Updates the weapon state and performs weapon actions.
         /// </summary>
         /// <returns>Returns true if the ball has made an action that finishes a player turn.</returns>
-        public virtual bool Update(float elapsedSeconds, Dictionary<InputMessage.MessageType, bool> KeysPressed) { return false; }
+        public virtual bool Update(float elapsedSeconds, Dictionary<InputMessage.ControlButton, bool> KeysPressed) { return false; }
 
         public virtual void HandleInput(InputMessage input) { }
     }

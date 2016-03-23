@@ -55,6 +55,7 @@ namespace Ballz
             Graphics.IsFullScreen = GameSettings.Fullscreen.Value;
             Graphics.PreferredBackBufferHeight = GameSettings.ScreenResolution.Value.Height;
             Graphics.PreferredBackBufferWidth = GameSettings.ScreenResolution.Value.Width;
+            Graphics.PreferMultiSampling = true;
             Window.AllowUserResizing = true;
             IsFixedTimeStep = false;
             

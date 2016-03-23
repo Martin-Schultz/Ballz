@@ -21,7 +21,7 @@ namespace Ballz.GameSession.Logic
 
         public WeaponControl Weapon { get; set; }
 
-        protected Dictionary<InputMessage.MessageType, bool> KeyPressed = new Dictionary<InputMessage.MessageType, bool>();
+        protected Dictionary<InputMessage.ControlButton, bool> KeyPressed = new Dictionary<InputMessage.ControlButton, bool>();
 
         public BallControl(Ballz game, Session match, Ball ball)
         {
@@ -31,11 +31,11 @@ namespace Ballz.GameSession.Logic
 
             Weapon = new Weapons.RopeTool(ball, game);
 
-            KeyPressed[InputMessage.MessageType.ControlsAction] = false;
-            KeyPressed[InputMessage.MessageType.ControlsUp] = false;
-            KeyPressed[InputMessage.MessageType.ControlsDown] = false;
-            KeyPressed[InputMessage.MessageType.ControlsLeft] = false;
-            KeyPressed[InputMessage.MessageType.ControlsRight] = false;
+            KeyPressed[InputMessage.ControlButton.ControlsAction] = false;
+            KeyPressed[InputMessage.ControlButton.ControlsUp] = false;
+            KeyPressed[InputMessage.ControlButton.ControlsDown] = false;
+            KeyPressed[InputMessage.ControlButton.ControlsLeft] = false;
+            KeyPressed[InputMessage.ControlButton.ControlsRight] = false;
         }
         
         /// <summary>
@@ -99,7 +99,7 @@ namespace Ballz.GameSession.Logic
             if (input?.Pressed != null)
             {
                 Weapon?.HandleInput(input);
-                KeyPressed[input.Kind] = input.Pressed.Value;
+                KeyPressed[input.Control] = input.Pressed.Value;
             }
         }   
     }

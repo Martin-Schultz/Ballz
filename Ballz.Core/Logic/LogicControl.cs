@@ -108,7 +108,7 @@ namespace Ballz.Logic
             if (message.Kind != Messages.Message.MessageType.InputMessage)
                 return;
 
-            if (((InputMessage)message).Kind == InputMessage.MessageType.ControlsConsole && ((InputMessage)message).Pressed.Value)
+            if (((InputMessage)message).Control == InputMessage.ControlButton.ControlsConsole && ((InputMessage)message).Pressed.Value)
                 RaiseMessageEvent(new LogicMessage(LogicMessage.MessageType.PerformanceMessage));
 
             switch (state)
@@ -130,24 +130,24 @@ namespace Ballz.Logic
         {
             if (msg.Pressed.Value)
             {
-                switch (msg.Kind)
+                switch (msg.Control)
                 {
-                    case InputMessage.MessageType.ControlsBack:
+                    case InputMessage.ControlButton.ControlsBack:
                         state = GameState.MenuState;
                         RaiseMessageEvent(new LogicMessage(LogicMessage.MessageType.GameMessage));
                         //todo: implement LogicMessage and use it here
                         break;
-                    case InputMessage.MessageType.ControlsUp:
+                    case InputMessage.ControlButton.ControlsUp:
                         break;
-                    case InputMessage.MessageType.ControlsDown:
+                    case InputMessage.ControlButton.ControlsDown:
                         break;
-                    case InputMessage.MessageType.ControlsLeft:
+                    case InputMessage.ControlButton.ControlsLeft:
                         break;
-                    case InputMessage.MessageType.ControlsRight:
+                    case InputMessage.ControlButton.ControlsRight:
                         break;
-                    case InputMessage.MessageType.ControlsAction:
+                    case InputMessage.ControlButton.ControlsAction:
                         break;
-                    case InputMessage.MessageType.RawInput:
+                    case InputMessage.ControlButton.RawInput:
                         break;
                     default:
                         //throw new ArgumentOutOfRangeException();
@@ -159,14 +159,14 @@ namespace Ballz.Logic
         private void MenuLogic(InputMessage msg)
         {
             Composite top = activeMenu.Peek();
-            if (msg.Kind == InputMessage.MessageType.RawInput || msg.Kind == InputMessage.MessageType.RawBack || msg.Pressed.Value)
+            if (msg.Control == InputMessage.ControlButton.RawInput || msg.Control == InputMessage.ControlButton.RawBack || msg.Pressed.Value)
             {
-                switch (msg.Kind)
+                switch (msg.Control)
                 {
-                    case InputMessage.MessageType.ControlsAction:
+                    case InputMessage.ControlButton.ControlsAction:
                         top.SelectedItem?.Activate();
                         break;
-                    case InputMessage.MessageType.ControlsBack:
+                    case InputMessage.ControlButton.ControlsBack:
                         if (activeMenu.Count == 1) // exit if we are in main menuToPrepare
                             Ballz.The().Exit();     //TODO: this is rather ugly find a nice way to terminate the programm like sending a termination message
                         else
@@ -181,7 +181,7 @@ namespace Ballz.Logic
 
                         RaiseMessageEvent(new MenuMessage(activeMenu.Peek()));
                         break;
-                    case InputMessage.MessageType.ControlsUp:
+                    case InputMessage.ControlButton.ControlsUp:
                         if (top.SelectedItem != null)
                         {
                             top.SelectPrevious();
@@ -189,7 +189,7 @@ namespace Ballz.Logic
                         }
 
                         break;
-                    case InputMessage.MessageType.ControlsDown:
+                    case InputMessage.ControlButton.ControlsDown:
                         if (top.SelectedItem != null)
                         {
                             top.SelectNext();
@@ -197,17 +197,17 @@ namespace Ballz.Logic
                         }
 
                         break;
-                    case InputMessage.MessageType.ControlsLeft:
+                    case InputMessage.ControlButton.ControlsLeft:
                         (top.SelectedItem as IChooseable)?.SelectPrevious();
                         break;
-                    case InputMessage.MessageType.ControlsRight:
+                    case InputMessage.ControlButton.ControlsRight:
                         (top.SelectedItem as IChooseable)?.SelectNext();
                         break;
-                    case InputMessage.MessageType.RawInput:
+                    case InputMessage.ControlButton.RawInput:
                         if (msg.Key != null)
                             (top.SelectedItem as IRawInputConsumer)?.HandleRawKey(msg.Key.Value);
                         break;
-                    case InputMessage.MessageType.RawBack:
+                    case InputMessage.ControlButton.RawBack:
                         (top.SelectedItem as IRawInputConsumer)?.HandleBackspace();
                         break;
                     default:
@@ -232,8 +232,6 @@ namespace Ballz.Logic
         /// </summary>
         void CheckInputMode(InputTranslator translator)
         {
-            if (rawInput)
-                translator.Mode = InputTranslator.InputMode.RAW;
         }
 
         private enum GameState

@@ -6,8 +6,9 @@ namespace Ballz.Messages
     [Serializable]
     public class InputMessage : Message
     {
-        public new enum MessageType
+        public new enum ControlButton
         {
+            ControlsText,
             ControlsConsole,
             ControlsUp,
             ControlsDown,
@@ -28,14 +29,14 @@ namespace Ballz.Messages
 
         public Player Player { get; private set; }
 
-        public InputMessage(MessageType type, bool? pressed, char? value, Player player) : base(Message.MessageType.InputMessage)
+        public InputMessage(ControlButton key, bool? pressed, char? value, Player player) : base(Message.MessageType.InputMessage)
         {
-            Kind = type;
+            Control = key;
             Key = value;
             Pressed = pressed;
             Player = player;
         }
 
-        public new MessageType Kind { get; private set; }
+        public new ControlButton Control { get; private set; }
     }
 }

@@ -24,7 +24,7 @@ namespace Ballz.GameSession.Logic
             Ball.HoldingWeapon = AvailableWeapons[SelectedWeaponIndex].Icon;
         }
 
-        InputMessage.MessageType? controlInput = null;
+        InputMessage.ControlButton? controlInput = null;
 
         List<WeaponControl> AvailableWeapons = new List<WeaponControl>();
         int SelectedWeaponIndex = 0;
@@ -35,20 +35,20 @@ namespace Ballz.GameSession.Logic
             
             if(Ball.IsAlive)
             {
-                if (KeyPressed[InputMessage.MessageType.ControlsLeft])
+                if (KeyPressed[InputMessage.ControlButton.ControlsLeft])
                 {
                     Ball.Velocity = new Vector2(Min(-2f, Ball.Velocity.X), Ball.Velocity.Y);
                     Ball.AimDirection = new Vector2(-Math.Abs(Ball.AimDirection.X), Ball.AimDirection.Y);
                 }
 
-                if (KeyPressed[InputMessage.MessageType.ControlsRight])
+                if (KeyPressed[InputMessage.ControlButton.ControlsRight])
                 {
                     Ball.Velocity = new Vector2(Max(2f, Ball.Velocity.X), Ball.Velocity.Y);
                     Ball.AimDirection = new Vector2(Math.Abs(Ball.AimDirection.X), Ball.AimDirection.Y);
                 }
 
                 // Up/Down keys rotate the aim vector
-                if (KeyPressed[InputMessage.MessageType.ControlsUp])
+                if (KeyPressed[InputMessage.ControlButton.ControlsUp])
                 {
                     var v = Ball.AimDirection;
                     // Rotate at 60°/s. Use sign of v.x to determine the direction, so that the up key always moves the crosshair upwards.
@@ -56,7 +56,7 @@ namespace Ballz.GameSession.Logic
                     Ball.AimDirection = v.Rotate(radians);
                 }
 
-                if (KeyPressed[InputMessage.MessageType.ControlsDown])
+                if (KeyPressed[InputMessage.ControlButton.ControlsDown])
                 {
                     var v = Ball.AimDirection;
                     // Rotate at 60°/s. Use sign of v.x to determine the direction, so that the up key always moves the crosshair upwards.
@@ -67,17 +67,17 @@ namespace Ballz.GameSession.Logic
                 // Handle single-shot input events
                 switch (controlInput)
                 {
-                    case InputMessage.MessageType.ControlsJump:
+                    case InputMessage.ControlButton.ControlsJump:
                         TryJump();
                         break;
-                    case InputMessage.MessageType.ControlsNextWeapon:
+                    case InputMessage.ControlButton.ControlsNextWeapon:
                         SelectedWeaponIndex = (SelectedWeaponIndex+1) % AvailableWeapons.Count;
                         Weapon = AvailableWeapons[SelectedWeaponIndex];
                         Ball.HoldingWeapon = AvailableWeapons[SelectedWeaponIndex].Icon;
                         Ball.IsCharging = false;
                         Ball.ShootCharge = 0f;
                         break;
-                    case InputMessage.MessageType.ControlsPreviousWeapon:
+                    case InputMessage.ControlButton.ControlsPreviousWeapon:
                         SelectedWeaponIndex = SelectedWeaponIndex-1;
                         if (SelectedWeaponIndex < 0)
                             SelectedWeaponIndex += AvailableWeapons.Count;
@@ -107,7 +107,7 @@ namespace Ballz.GameSession.Logic
             InputMessage input = message as InputMessage;
             if (input?.Pressed ?? false)
             {
-                controlInput = input.Kind;
+                controlInput = input.Control;
             }
         }
     }

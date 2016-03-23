@@ -95,14 +95,14 @@
 
         public void HandleInputMessage(InputMessage message)
         {
-            switch (message.Kind)
+            switch (message.Control)
             {
                 // Intentional fallthrough
-                case InputMessage.MessageType.ControlsAction:
-                case InputMessage.MessageType.ControlsUp:
-                case InputMessage.MessageType.ControlsDown:
-                case InputMessage.MessageType.ControlsLeft:
-                case InputMessage.MessageType.ControlsRight:
+                case InputMessage.ControlButton.ControlsAction:
+                case InputMessage.ControlButton.ControlsUp:
+                case InputMessage.ControlButton.ControlsDown:
+                case InputMessage.ControlButton.ControlsLeft:
+                case InputMessage.ControlButton.ControlsRight:
                     connectionToServer.Send(message);
                     break;
             }

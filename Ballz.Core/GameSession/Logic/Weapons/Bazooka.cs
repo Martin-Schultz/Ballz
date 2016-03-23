@@ -16,9 +16,9 @@ namespace Ballz.GameSession.Logic.Weapons
 
         public override string Name { get; } = "Bazooka";
 
-        public override bool Update(float elapsedSeconds, Dictionary<InputMessage.MessageType, bool> KeysPressed)
+        public override bool Update(float elapsedSeconds, Dictionary<InputMessage.ControlButton, bool> KeysPressed)
         {
-            Ball.IsCharging = KeysPressed[InputMessage.MessageType.ControlsAction];
+            Ball.IsCharging = KeysPressed[InputMessage.ControlButton.ControlsAction];
             Ball.IsAiming = true;
             if (!Ball.IsCharging && Ball.ShootCharge > 0)
             {

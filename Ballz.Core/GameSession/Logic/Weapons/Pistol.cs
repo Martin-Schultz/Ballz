@@ -34,7 +34,7 @@ namespace Ballz.GameSession.Logic.Weapons
 
         public override void HandleInput(InputMessage input)
         {
-            if((input.Pressed ?? false) && input.Kind == InputMessage.MessageType.ControlsAction)
+            if((input.Pressed ?? false) && input.Control == InputMessage.ControlButton.ControlsAction)
             {
                 ++shotsFired;
                 var rayHit = Game.Match.Physics.Raycast(Ball.Position, Ball.Position + Ball.AimDirection * 1000f);
@@ -56,7 +56,7 @@ namespace Ballz.GameSession.Logic.Weapons
             base.HandleInput(input);
         }
 
-        public override bool Update(float elapsedSeconds, Dictionary<InputMessage.MessageType, bool> KeysPressed)
+        public override bool Update(float elapsedSeconds, Dictionary<InputMessage.ControlButton, bool> KeysPressed)
         {
             //reset the shotsFired counter after 2 shots and end the current turn.
             if (shotsFired > 0 && (shotsFired % 2) == 0)

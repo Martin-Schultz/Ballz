@@ -22,9 +22,9 @@ namespace Ballz.GameSession.Logic.Weapons
             
             if(input.Pressed ?? false)
             {
-                switch(input.Kind)
+                switch(input.Control)
                 {
-                    case InputMessage.MessageType.ControlsAction:
+                    case InputMessage.ControlButton.ControlsAction:
                         // Toggle Rope
                         if (Ball.AttachedRope != null)
                         {
@@ -50,12 +50,12 @@ namespace Ballz.GameSession.Logic.Weapons
                         }
 
                         break;
-                    case InputMessage.MessageType.ControlsUp:
+                    case InputMessage.ControlButton.ControlsUp:
                         // Make rope shorter
                         if (Ball.AttachedRope != null)
                             Game.Match.Physics.ShortenRope(Ball.AttachedRope);
                         break;
-                    case InputMessage.MessageType.ControlsDown:
+                    case InputMessage.ControlButton.ControlsDown:
                         // Make rope longer
                         if (Ball.AttachedRope != null)
                             Game.Match.Physics.LoosenRope(Ball.AttachedRope);
