@@ -40,10 +40,6 @@
     <OutputPath>bin\x64\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MonoGame.Framework, Version=3.4.0.459, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MonoGame.Framework.WindowsDX.3.4.0.459\lib\net40\MonoGame.Framework.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -70,6 +66,14 @@
     <ProjectReference Include="..\Ballz.Core\Ballz.csproj">
       <Project>{0f30a63c-8123-40a8-8c5b-431941cdd4a4}</Project>
       <Name>Ballz</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\extern\farseer\SourceFiles\Farseer Physics FNA.csproj">
+      <Project>{0aad36e3-51a5-4a07-ab60-ac2a66bd38b7}</Project>
+      <Name>Farseer Physics FNA</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\extern\fna\FNA.csproj">
+      <Project>{35253ce1-c864-4cd3-8249-4d1319748e8f}</Project>
+      <Name>FNA</Name>
     </ProjectReference>
   </ItemGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

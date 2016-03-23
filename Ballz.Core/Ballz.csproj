@@ -197,9 +197,6 @@
     <Content Include="Content\Textures\Teams\Murica.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SDL2.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\extern\farseer\SourceFiles\Farseer Physics FNA.csproj">
