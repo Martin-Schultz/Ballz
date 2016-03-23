@@ -195,8 +195,16 @@ namespace Ballz.GameSession.Renderer
                     var weaponTextureScale = 256f / weaponTexture.Width;
 
                     // Draw weapon
-
-                    //spriteBatch.Draw(weaponTexture, position: weaponPosScreen, color: Color.White, rotation: weaponRotation, scale: new Vector2(weaponTextureScale, weaponTextureScale), origin: new Vector2(weaponTexture.Width / 2f, weaponTexture.Height / 2f), effects: effects);
+                    spriteBatch.Draw(
+                        texture: weaponTexture,
+                        position: weaponPosScreen,
+                        sourceRectangle: null,
+                        color: Color.White,
+                        rotation: weaponRotation,
+                        origin: new Vector2(weaponTexture.Width / 2f, weaponTexture.Height / 2f),
+                        scale: weaponTextureScale,
+                        effects: effects,
+                        layerDepth: 1f);
                 }
 
                 if (ball.IsAiming)
@@ -211,11 +219,40 @@ namespace Ballz.GameSession.Renderer
                         var chargeColor = GetChargeColor(ball.ShootCharge);
 
                         // Draw charge indicator
-                        //spriteBatch.Draw(WhiteTexture, position: aimIndicatorScreen, scale: new Vector2(100, 20), color: new Color(Color.Black, (int)(64*ball.ShootCharge)), rotation: aimRotation, origin: new Vector2(0, 0.5f));
-                        //spriteBatch.Draw(WhiteTexture, position: aimIndicatorScreen, scale: aimIndicatorSize, color: new Color(chargeColor), rotation: aimRotation, origin: new Vector2(0, 0.5f));
+                        spriteBatch.Draw(
+                            texture: WhiteTexture,
+                            position: aimIndicatorScreen,
+                            sourceRectangle: null,
+                            color: new Color(Color.Black, (int)(64 * ball.ShootCharge)),
+                            rotation: aimRotation,
+                            origin: new Vector2(0, 0.5f),
+                            scale: new Vector2(100, 20),
+                            effects: SpriteEffects.None, 
+                            layerDepth: 1f);
+
+                        spriteBatch.Draw(
+                            texture: WhiteTexture,
+                            position: aimIndicatorScreen,
+                            sourceRectangle: null,
+                            color: new Color(chargeColor),
+                            rotation: aimRotation,
+                            origin: new Vector2(0, 0.5f),
+                            scale: aimIndicatorSize,
+                            effects: SpriteEffects.None,
+                            layerDepth: 1f);
                     }
                     // Draw crosshair
-                    //spriteBatch.Draw(CrosshairTexture, position: aimTargetScreen, color: Color.White, rotation: aimRotation, origin: new Vector2(16, 16));
+                    spriteBatch.Draw(
+                        texture: CrosshairTexture,
+                        position: aimTargetScreen,
+                        sourceRectangle: null,
+                        color: Color.White,
+                        rotation: aimRotation,
+                        origin: new Vector2(16, 16),
+                        scale: 1f,
+                        effects: SpriteEffects.None,
+                        layerDepth: 1f
+                        );
                 }
             }
             else // Player is dead
@@ -232,7 +269,17 @@ namespace Ballz.GameSession.Renderer
             if (Game.Match.UsePlayerTurns && Game.Match.ActivePlayer == ball.Player && ball.Player.ActiveBall == ball)
             {
                 screenPos -= new Vector2(0, 50);
-                //spriteBatch.Draw(Game.Content.Load<Texture2D>("Textures/RedArrow"), screenPos, color: Color.White, origin: new Vector2(29, 38));
+                spriteBatch.Draw(
+                    texture: Game.Content.Load<Texture2D>("Textures/RedArrow"),
+                    position: screenPos,
+                    sourceRectangle:null,
+                    color: Color.White,
+                    rotation: 0f,
+                    origin: new Vector2(29, 38),
+                    scale: 1f,
+                    effects: SpriteEffects.None,
+                    layerDepth: 1f
+                    );
             }
         }
 
